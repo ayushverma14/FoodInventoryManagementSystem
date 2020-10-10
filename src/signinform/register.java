@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.util.*;
 /**
  *
  * @author Administrator
@@ -24,6 +24,19 @@ public class register extends javax.swing.JFrame {
      */
     public register() {
         initComponents();
+    }
+    
+    private String encode_String(String passwd)
+    {
+        return Base64.getEncoder().encodeToString(passwd.getBytes());
+    }
+    private boolean passwd_check(String passwd)
+    {
+        if(passwd.length()>6)
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -197,8 +210,11 @@ public class register extends javax.swing.JFrame {
         if(fname.isEmpty() || mname.isEmpty() || lname.isEmpty() || id.isEmpty() || username.isEmpty() || password.isEmpty()
                 ){
             JOptionPane.showMessageDialog(this,"fill up the form properly.","Error",JOptionPane.ERROR_MESSAGE);
-        }else{
-            userRegister(id,fname,mname,lname,username,password);
+        }else if(!passwd_check(password))
+        {JOptionPane.showMessageDialog(this, "Password atleast 6 characters");
+        }
+        else {
+            userRegister(id,fname,mname,lname,username,encode_String(password));
         }
     }//GEN-LAST:event_btnregisterActionPerformed
 

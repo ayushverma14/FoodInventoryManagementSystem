@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import foodinventory.*;
+import java.util.Base64;
 /**
  *
  * @author Administrator
@@ -14,6 +16,10 @@ public class login extends javax.swing.JFrame {
     
     public login() {
         initComponents();
+    }
+    private String encode_String(String passwd)
+    {
+        return Base64.getEncoder().encodeToString(passwd.getBytes());
     }
 
     /**
@@ -238,13 +244,12 @@ public class login extends javax.swing.JFrame {
             PreparedStatement st=(PreparedStatement)
                     dbconn.prepareStatement("select * from users where username=? AND password=?"); 
             st.setString(1, username);
-            st.setString(2, password);
+            st.setString(2, encode_String(password));
             ResultSet res=st.executeQuery();
             if(res.next()){
                 dispose();
-                dashboard d=new dashboard();
-                d.setTitle("dashboard");
-                d.setVisible(true);
+               FoodInventory inv=new FoodInventory();
+               
             }else{
                 System.out.println("username" + username);
                 System.out.println("password" + password);

@@ -11,13 +11,13 @@ import java.sql.*;
  * @author Administrator
  */
 public class main {
-    static String url="jdbc:mysql://localhost:3306/demo";
+    static String url="jdbc:mysql://localhost:3306/sakila";
     static String user="root";
-    static String pass="Nihal@123";
+    static String pass="aman";
     public static Connection connectDB(){
         Connection conn=null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn=DriverManager.getConnection(url,user,pass);
             return conn;
         }catch(Exception ex){
