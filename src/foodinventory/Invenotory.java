@@ -9,8 +9,6 @@ package foodinventory;
  *
  * @author 91912
  */
-import static foodinventory.FoodInventory.con;
-import static foodinventory.FoodInventory.st;
 import java.sql.*;
 import foodinventory.inventorybackend.*;
 import javax.swing.*;
@@ -72,6 +70,9 @@ Connection con;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Model = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        search = new javax.swing.JButton();
+        Load = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,6 +135,27 @@ Connection con;
             }
         });
 
+        jButton1.setText("CHART ANALYSIS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        search.setText("SEARCH");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+
+        Load.setText("LOAD");
+        Load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,19 +166,23 @@ Connection con;
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(itemfield, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Categoryfield, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Categoryfield, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Load, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(itemfield, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(update_entry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Model, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Add_category, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                    .addComponent(Add_category, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -178,9 +204,15 @@ Connection con;
                             .addComponent(itemfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(28, 28, 28)
-                        .addComponent(update_entry)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(update_entry)
+                            .addComponent(search))
                         .addGap(29, 29, 29)
-                        .addComponent(Model)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Model)
+                            .addComponent(Load))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
@@ -386,6 +418,69 @@ else {
         }
     }//GEN-LAST:event_Category_tableMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        DefaultTableModel dm1=(DefaultTableModel)Category_table.getModel();
+        String cat1[]=new String[25];
+        int num[]=new int[25];
+        int c=dm1.getRowCount();
+        
+        for(int i=0;i<c;i++)
+        {
+            cat1[i]=dm1.getValueAt(i,0).toString();
+            num[i]=Integer.parseInt(dm1.getValueAt(i, 1).toString());
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+        String cat=Categoryfield.getText().toString().trim();
+        try{
+        if(!cat.isEmpty())
+        {
+            String q1="Select * from categTable where Category=?";
+            PreparedStatement ps=con.prepareStatement(q1);
+            ps.setString(1,cat);
+            ResultSet rs=ps.executeQuery();
+DefaultTableModel dm1=(DefaultTableModel)Category_table.getModel();
+
+dm1.setRowCount(0);
+if(rs.next())
+{String entry[]={rs.getString("Category"),rs.getString("Items")};
+    dm1.addRow(entry);}}
+else 
+{
+        JOptionPane.showMessageDialog(this, "fill the category field");
+        
+        }
+        }
+        catch(Exception exp)
+        {
+        System.out.println(exp.getMessage());}
+        
+        
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void LoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadActionPerformed
+        // TODO add your handling code here:
+        String s="categtable";
+       inv.table_update(s);
+       System.out.println(inv.k);
+       dm.setRowCount(0);
+                for(int i=0;i<inv.k;i++)
+                {
+                    String set[]={inv.cat[i],inv.items[i]};
+                     dm=(DefaultTableModel)Category_table.getModel();
+                    dm.addRow(set);
+                }
+        
+        
+    }//GEN-LAST:event_LoadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -429,12 +524,15 @@ else {
     private javax.swing.JButton Add_category;
     private javax.swing.JTable Category_table;
     private javax.swing.JTextField Categoryfield;
+    private javax.swing.JButton Load;
     private javax.swing.JButton Model;
     private javax.swing.JTextField itemfield;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton search;
     private javax.swing.JButton update_entry;
     // End of variables declaration//GEN-END:variables
 }

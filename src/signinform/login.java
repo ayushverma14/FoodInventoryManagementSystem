@@ -11,7 +11,7 @@ import java.util.Base64;
  * @author Administrator
  */
 public class login extends javax.swing.JFrame {
-
+static String Name,Usern,Id;
     
     
     public login() {
@@ -172,6 +172,7 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username=tfusername.getText();
         String password=String.valueOf(tfpassword.getPassword());
+        
         if(username.isEmpty() || password.isEmpty()){
           JOptionPane.showMessageDialog(this, "username / password should not be empty.","Error",JOptionPane.ERROR_MESSAGE);  
         }else{
@@ -242,13 +243,21 @@ public class login extends javax.swing.JFrame {
         if(dbconn!=null){
         try {
             PreparedStatement st=(PreparedStatement)
-                    dbconn.prepareStatement("select * from users where username=? AND password=?"); 
+                    dbconn.prepareStatement("select * from user where username=? AND password=?"); 
             st.setString(1, username);
             st.setString(2, encode_String(password));
             ResultSet res=st.executeQuery();
             if(res.next()){
                 dispose();
-               FoodInventory inv=new FoodInventory();
+                Usern=username;
+                Name=res.getString("firstname");
+                Id=res.getString("id");
+           dashboard db=new dashboard();
+          
+           db.setVisible(true);
+           
+
+               
                
             }else{
                 System.out.println("username" + username);

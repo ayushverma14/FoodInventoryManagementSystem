@@ -93,10 +93,14 @@ public ADD_WINDOW(String s){
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        close = new javax.swing.JButton();
         Pricecb = new javax.swing.JRadioButton();
         Quantitycb = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        price = new javax.swing.JRadioButton();
+        Model = new javax.swing.JRadioButton();
+        close = new javax.swing.JButton();
+        Load = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -163,13 +167,6 @@ public ADD_WINDOW(String s){
 
         jLabel4.setText("Cost");
 
-        close.setText("CLOSE");
-        close.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeActionPerformed(evt);
-            }
-        });
-
         Pricecb.setText("Price");
         Pricecb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +183,36 @@ public ADD_WINDOW(String s){
 
         jLabel5.setText("SORT");
 
+        jLabel6.setText("FILTERS");
+
+        price.setText("PRICE");
+        price.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceActionPerformed(evt);
+            }
+        });
+
+        Model.setText("MODEL");
+        Model.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModelActionPerformed(evt);
+            }
+        });
+
+        close.setText("CLOSE");
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
+
+        Load.setText("LOAD");
+        Load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,13 +227,10 @@ public ADD_WINDOW(String s){
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                             .addComponent(ADD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Pricecb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Quantitycb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,17 +238,36 @@ public ADD_WINDOW(String s){
                                         .addComponent(Quantity, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                                         .addComponent(Cost)
                                         .addComponent(MODEL))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(Pricecb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Quantitycb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                                    .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Model, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Load, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(close)
+                    .addComponent(Load))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -249,9 +292,12 @@ public ADD_WINDOW(String s){
                         .addComponent(Pricecb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Quantitycb)
-                        .addGap(40, 40, 40)
-                        .addComponent(close))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(price)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Model)
                 .addContainerGap())
         );
 
@@ -261,11 +307,6 @@ public ADD_WINDOW(String s){
     private void MODELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MODELActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MODELActionPerformed
-
-    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
- this.setVisible(false);
-// TODO add your handling code here:
-    }//GEN-LAST:event_closeActionPerformed
 
     private void ModelTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModelTableMouseClicked
         // TODO add your handling code here:
@@ -287,6 +328,8 @@ public ADD_WINDOW(String s){
 
     private void CostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CostActionPerformed
         // TODO add your handling code here:
+       
+        
     }//GEN-LAST:event_CostActionPerformed
 
     private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
@@ -472,6 +515,86 @@ else {
         
     }//GEN-LAST:event_formMouseClicked
 
+    private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
+        // TODO add your handling code here:
+        if(price.isSelected())
+        {
+            Model.setSelected(false);
+            try{
+                String tite=this.getTitle().toString();
+            String q1="Select * from "+tite+" where Price>=?";
+            PreparedStatement ps=con.prepareStatement(q1);
+           
+            ps.setString(1,Cost.getText().toString());
+            ResultSet rs=ps.executeQuery();
+            DefaultTableModel dm1=(DefaultTableModel)ModelTable.getModel();
+dm1.setRowCount(0);
+while(rs.next())
+{
+    String entry[]={rs.getString("Model"),rs.getString("Quantity"),rs.getString("Price")};
+    dm1.addRow(entry);
+}
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+            
+        
+    }//GEN-LAST:event_priceActionPerformed
+
+    private void ModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModelActionPerformed
+        // TODO add your handling code here:
+        if(Model.isSelected())
+        {
+            price.setSelected(false);
+            try{
+                String tite=this.getTitle().toString();
+            String q1="Select * from "+tite+" where Model=?";
+            PreparedStatement ps=con.prepareStatement(q1);
+           
+            ps.setString(1,Model.getText().toString());
+            ResultSet rs=ps.executeQuery();
+            DefaultTableModel dm1=(DefaultTableModel)ModelTable.getModel();
+dm1.setRowCount(0);
+while(rs.next())
+{
+    String entry[]={rs.getString("Model"),rs.getString("Quantity"),rs.getString("Price")};
+    dm1.addRow(entry);
+}
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+    }//GEN-LAST:event_ModelActionPerformed
+
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeActionPerformed
+
+    private void LoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadActionPerformed
+ inv=new inventorybackend();
+       
+       inv.table_update1(this.getTitle().toString());
+       System.out.println(inv.k);
+       dm.setRowCount(0);
+                for(int i=0;i<inv.k;i++)
+                {
+                    String set[]={inv.mod[i],inv.quan[i],inv.price[i]};
+                     dm=(DefaultTableModel)ModelTable.getModel();
+                    dm.addRow(set);
+                }
+        
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -510,7 +633,9 @@ else {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD;
     private javax.swing.JTextField Cost;
+    private javax.swing.JButton Load;
     private javax.swing.JTextField MODEL;
+    private javax.swing.JRadioButton Model;
     private javax.swing.JTable ModelTable;
     private javax.swing.JRadioButton Pricecb;
     private javax.swing.JTextField Quantity;
@@ -522,9 +647,11 @@ else {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JRadioButton price;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
