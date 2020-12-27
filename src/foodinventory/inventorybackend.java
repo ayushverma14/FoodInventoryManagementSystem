@@ -61,9 +61,10 @@ public class inventorybackend {
         }
     }
         
-    public void table_update(String table_name)    {
+        public void table_update(String table_name)    {
         try{
             System.out.println(table_name);
+            
          String q1="select * from "+table_name;
          
   PreparedStatement st=con.prepareStatement(q1.trim());

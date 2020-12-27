@@ -11,8 +11,15 @@ package foodinventory;
  */
 import java.sql.*;
 import foodinventory.inventorybackend.*;
+import java.awt.Color;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Invenotory extends javax.swing.JFrame {
 static inventorybackend inv;
@@ -35,13 +42,14 @@ Connection con;
        String s="categtable";
        inv.table_update(s);
        System.out.println(inv.k);
+       
                 for(int i=0;i<inv.k;i++)
                 {
                     String set[]={inv.cat[i],inv.items[i]};
                      dm=(DefaultTableModel)Category_table.getModel();
                     dm.addRow(set);
                 }
-        
+        post_table();
         
         }
         catch(Exception e)
@@ -49,6 +57,23 @@ Connection con;
             System.out.println(e.getMessage());
         }
         
+    }
+    
+    public void post_table()
+    {
+        inv.table_update("categTable");
+        int f=0;
+        POSTS.setText("");
+        for(int i=0;i<inv.k;i++)
+        {
+            if(Integer.parseInt(inv.items[i])<2)
+            {
+                f=1;
+                POSTS.append(dm.getValueAt(i, 0)+"is deficient ="+inv.items[i]+"\n");
+            }
+            
+        }
+        if(f==0)POSTS.setText("");
     }
 
     /**
@@ -70,9 +95,12 @@ Connection con;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Model = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        chartbut = new javax.swing.JButton();
         search = new javax.swing.JButton();
         Load = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        POSTS = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,10 +163,10 @@ Connection con;
             }
         });
 
-        jButton1.setText("CHART ANALYSIS");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        chartbut.setText("CHART ANALYSIS");
+        chartbut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                chartbutActionPerformed(evt);
             }
         });
 
@@ -155,6 +183,12 @@ Connection con;
                 LoadActionPerformed(evt);
             }
         });
+
+        POSTS.setColumns(20);
+        POSTS.setRows(5);
+        jScrollPane2.setViewportView(POSTS);
+
+        jLabel3.setText("POSTS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,18 +216,22 @@ Connection con;
                     .addComponent(Model, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Add_category, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(chartbut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Add_category)
                             .addComponent(Categoryfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,10 +248,14 @@ Connection con;
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Model)
-                            .addComponent(Load))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                            .addComponent(Load))))
+                .addGap(18, 18, 18)
+                .addComponent(chartbut)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -418,7 +460,7 @@ else {
         }
     }//GEN-LAST:event_Category_tableMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void chartbutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chartbutActionPerformed
         // TODO add your handling code here:
         
         DefaultTableModel dm1=(DefaultTableModel)Category_table.getModel();
@@ -432,9 +474,20 @@ else {
             num[i]=Integer.parseInt(dm1.getValueAt(i, 1).toString());
         }
         
+        DefaultCategoryDataset ds=new DefaultCategoryDataset();
+        System.out.println(ds+cat1[0]+num[0]);
+        for(int i=0;i<c;i++){
+        ds.setValue(num[i], "Quantity", cat1[i]);
+        }
+        JFreeChart jf=ChartFactory.createBarChart("Stock", "Quantity", "Category", ds, PlotOrientation.VERTICAL, false,true,false);
+        CategoryPlot cp=jf.getCategoryPlot();
+        cp.setRangeGridlinePaint(Color.ORANGE);
         
+        ChartFrame cf=new ChartFrame("Inventory",jf);
+        cf.setVisible(true);
+        cf.setSize(400,500);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_chartbutActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         // TODO add your handling code here:
@@ -477,7 +530,7 @@ else
                      dm=(DefaultTableModel)Category_table.getModel();
                     dm.addRow(set);
                 }
-        
+        post_table();
         
     }//GEN-LAST:event_LoadActionPerformed
 
@@ -526,12 +579,15 @@ else
     private javax.swing.JTextField Categoryfield;
     private javax.swing.JButton Load;
     private javax.swing.JButton Model;
+    private javax.swing.JTextArea POSTS;
+    private javax.swing.JButton chartbut;
     private javax.swing.JTextField itemfield;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton search;
     private javax.swing.JButton update_entry;
     // End of variables declaration//GEN-END:variables

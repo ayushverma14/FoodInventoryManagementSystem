@@ -364,6 +364,13 @@ public ADD_WINDOW(String s){
                      dm=(DefaultTableModel)ModelTable.getModel();
                     dm.addRow(set);
                 }
+         int rc=ModelTable.getRowCount();
+         String q1="Update categTable set Category=?,Items=? where Category=?";
+         PreparedStatement ps=con.prepareStatement(q1);
+         ps.setString(1,this.getTitle().toString());
+         ps.setString(2,Integer.toString(rc));
+         ps.setString(3,this.getTitle().toString());
+         ps.executeUpdate();
          }
          catch(Exception e)
          {
@@ -461,7 +468,7 @@ else {
         if(state)
         {
             try{
-                
+               Quantitycb.setSelected(false);
             String q1="Select * from "+title+" Order by Price ASC";
             PreparedStatement st=con.prepareStatement(q1);
             ResultSet rs= st.executeQuery();
@@ -488,7 +495,7 @@ else {
         if(state)
         {
             try{
-               
+               Pricecb.setSelected(false);
                     
             String q1="Select * from "+title+" Order by Quantity ASC";
             PreparedStatement st=con.prepareStatement(q1);
@@ -573,7 +580,20 @@ while(rs.next())
     }//GEN-LAST:event_ModelActionPerformed
 
     private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
-this.setVisible(false);
+
+        try{int rc=ModelTable.getRowCount();
+        System.out.println(rc);
+         String q1="Update categTable set Category=?,Items=? where Category=?";
+         PreparedStatement ps=con.prepareStatement(q1);
+         ps.setString(1,this.getTitle().toString());
+         ps.setString(2,Integer.toString(rc));
+         ps.setString(3,this.getTitle().toString());
+         ps.executeUpdate();
+        this.setVisible(false);}
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_closeActionPerformed
 
